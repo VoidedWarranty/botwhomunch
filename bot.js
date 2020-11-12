@@ -22,7 +22,7 @@ function respond() {
 function postMessage() {
   var botResponse, options, body, botReq;
 
-  botResponse = "imgur.com/a/Xx4g4x6";
+  botResponse = "https://imgur.com/a/Xx4g4x6";
 
   options = {
     hostname: 'api.groupme.com',
