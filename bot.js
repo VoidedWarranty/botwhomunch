@@ -6,7 +6,7 @@ var botID = "79e68331dba0dddfb1c4da512f"; //test bot
 
 function respond() {
   var request = JSON.parse(this.req.chunks[0]),
-      botRegex = /^\mock trial$/;
+      botRegex = /^mock trial$/i;
 
   if(request.text && botRegex.test(request.text)) {
     this.res.writeHead(200);
