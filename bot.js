@@ -5,7 +5,7 @@ var botID = "79e68331dba0dddfb1c4da512f";
 
 function respond() {
   var request = JSON.parse(this.req.chunks[0]),
-      botRegex = /^\/mock trial$/;
+      botRegex = /^\mock trial$/;
 
   if(request.text && botRegex.test(request.text)) {
     this.res.writeHead(200);
@@ -21,7 +21,7 @@ function respond() {
 function postMessage() {
   var botResponse, options, body, botReq;
 
-  botResponse = cool();
+  botResponse = "Fuck Mock Trial";
 
   options = {
     hostname: 'api.groupme.com',
