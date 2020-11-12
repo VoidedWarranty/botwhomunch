@@ -1,8 +1,8 @@
 var HTTPS = require('https');
 var cool = require('cool-ascii-faces');
 
-var botID = "79e68331dba0dddfb1c4da512f"; //test bot
-//var botID = "016ef9300233dded8d0238cec3"; //bot who munch
+//var botID = "79e68331dba0dddfb1c4da512f"; //test bot
+var botID = "016ef9300233dded8d0238cec3"; //bot who munch
 
 function respond() {
   var request = JSON.parse(this.req.chunks[0]),
