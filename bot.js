@@ -98,7 +98,7 @@ function postCompliment(name) {
 
 function getCompliment(name) {
   var fs = require("fs");
-  var text = fs.readFileSync("./compliments.txt");
+  var text = fs.readFileSync("./compliments.txt").toString('utf-8');
   var compliments = text.split("\n");
   return name + ", " + compliments[Math.floor(Math.random() * (compliments.length - 1))];
 }
