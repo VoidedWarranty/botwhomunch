@@ -17,13 +17,13 @@ function respond() {
   } 
   else if(request.text && complimentRegex.test(request.text)){
     this.res.writeHead(200);
-    postCompliment(request.text.substring(16));
+    postCompliment(request.text.substring(20));
     this.res.end();
   }
   
   else if(request.text && insultRegex.test(request.text)){
     this.res.writeHead(200);
-    postInsult(request.text.substring());
+    postInsult(request.text.substring(16));
     this.res.end();
   }
   else {
