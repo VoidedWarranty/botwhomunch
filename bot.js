@@ -1,23 +1,31 @@
 var HTTPS = require('https');
 var cool = require('cool-ascii-faces');
 
-var botID = "79e68331dba0dddfb1c4da512f"; //test bot
-//var botID = "016ef9300233dded8d0238cec3"; //bot who munch
+//var botID = "79e68331dba0dddfb1c4da512f"; //test bot
+var botID = "016ef9300233dded8d0238cec3"; //bot who munch
 
 function respond() {
   var request = JSON.parse(this.req.chunks[0]),
-      FMTRegex = /^.*mock trial.*$/i,
-      complimentRegex = /^munchbot, compliment.*$/i;
+      botRegex = /^.*mock trial.*$/i,
+      complimentRegex = /^munchbot, compliment.*$/i,
+      insultRegex = /^munchbot, insult.*$/i;
 
-  if(request.text && FMTRegex.test(request.text)) {
+  if(request.text && botRegex.test(request.text)) {
     this.res.writeHead(200);
-    postFMT();
+    postMessage();
     this.res.end();
   } 
   else if(request.text && complimentRegex.test(request.text)){
     this.res.writeHead(200);
-    postCompliment(request.text.substring(20);
+    postCompliment(request.text.substring(16));
     this.res.end();
+  }
+  
+  else if(request.text && insultRegex.test(request.text)){
+    this.res.writeHead(200);
+    postInsult(request.text.substring());
+    this.res.end();
+  }
   else {
     console.log("don't care");
     this.res.writeHead(200);
@@ -25,7 +33,7 @@ function respond() {
   }
 }
 
-function postFMT() {
+function postMessage() {
   var botResponse, options, body, botReq;
 
   botResponse = "https://imgur.com/a/Xx4g4x6";
@@ -60,11 +68,10 @@ function postFMT() {
   botReq.end(JSON.stringify(body));
 }
 
-function postCompliment(complimentee) {
+function postCompliment(name) {
   var botResponse, options, body, botReq;
 
-
-  botResponse = getRandomCompliment(complimentee);
+  botResponse = getInsult(name);
 
   options = {
     hostname: 'api.groupme.com',
@@ -96,16 +103,21 @@ function postCompliment(complimentee) {
   botReq.end(JSON.stringify(body));
 }
 
-function getRandomCompliment(complimentee) {
+function getCompliment(name) {
   var fs = require("fs");
-  var text = fs.readFileSync("./compliments.txt");
+  var text = fs.readFileSync("./compliments.txt").toString('utf-8');
   var compliments = text.split("\n");
-  var choice = compliments[Math.floor(Math.random() * (compliments.length-1))];
-  var ret = complimentee + ", " + choice;
-  return ret;
-
-
+  return name + ", " + compliments[Math.floor(Math.random() * (compliments.length - 1))];
 }
+
+
+function getInsult(name) {
+  var fs = require("fs");
+  var text = fs.readFileSync("./insults.txt").toString('utf-8');
+  var insults = text.split("\n");
+  return name + ", " + insults[Math.floor(Math.random() * (insults.length - 1))];
+}
+
 
 
 exports.respond = respond;
