@@ -11,7 +11,7 @@ function respond() {
 
   if(request.text && FMTRegex.test(request.text)) {
     this.res.writeHead(200);
-    postFMT();
+    postMessage();
     this.res.end();
   } 
   else if(request.text && complimentRegex.test(request.text)){
@@ -25,7 +25,7 @@ function respond() {
   }
 }
 
-function postFMT() {
+function postMessage() {
   var botResponse, options, body, botReq;
 
   botResponse = "https://imgur.com/a/Xx4g4x6";
