@@ -6,12 +6,12 @@ var botID = "79e68331dba0dddfb1c4da512f"; //test bot
 
 function respond() {
   var request = JSON.parse(this.req.chunks[0]),
-      FMTRegex = /^.*mock trial.*$/i,
+      botRegex = /^.*mock trial.*$/i
       complimentRegex = /^munchbot, compliment.*$/i;
 
-  if(request.text && FMTRegex.test(request.text)) {
+  if(request.text && botRegex.test(request.text)) {
     this.res.writeHead(200);
-    postFMT();
+    postMessage();
     this.res.end();
   } 
   else if(request.text && complimentRegex.test(request.text)){
@@ -26,7 +26,7 @@ function respond() {
   }
 }
 
-function postFMT() {
+function postMessage() {
   var botResponse, options, body, botReq;
 
   botResponse = "https://imgur.com/a/Xx4g4x6";
@@ -99,9 +99,10 @@ function postCompliment(name) {
 function getCompliment(name) {
   var fs = require("fs");
   var text = fs.readFileSync("./compliments.txt");
-  var compliments = text.split('\n");
+  var compliments = text.split("\n");
   return name + ", " + compliments[Math.floor(Math.random() * (compliments.length - 1))];
-
 }
+
+
 
 exports.respond = respond;

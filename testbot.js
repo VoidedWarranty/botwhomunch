@@ -11,21 +11,22 @@ function respond() {
 
   if(request.text && FMTRegex.test(request.text)) {
     this.res.writeHead(200);
-    postMessage();
+    postFMT();
     this.res.end();
   } 
-  else if(request.text && complimentRegex.test(request.text)){
+  else if(request.text && complimentRegex.test(request.text)) {
     this.res.writeHead(200);
-    postCompliment(request.text.substring(20);
+    postCompliment(request.text.substring(20));
     this.res.end();
-  else {
+  }
+    else {
     console.log("don't care");
     this.res.writeHead(200);
     this.res.end();
   }
 }
 
-function postMessage() {
+function postFMT() {
   var botResponse, options, body, botReq;
 
   botResponse = "https://imgur.com/a/Xx4g4x6";
@@ -60,11 +61,10 @@ function postMessage() {
   botReq.end(JSON.stringify(body));
 }
 
-function postCompliment(complimentee) {
+function postCompliment(name) {
   var botResponse, options, body, botReq;
 
-
-  botResponse = getRandomCompliment(complimentee);
+  botResponse = getCompliment(name);
 
   options = {
     hostname: 'api.groupme.com',
@@ -96,16 +96,12 @@ function postCompliment(complimentee) {
   botReq.end(JSON.stringify(body));
 }
 
-function getRandomCompliment(complimentee) {
+function getCompliment(name) {
   var fs = require("fs");
   var text = fs.readFileSync("./compliments.txt");
-  var compliments = text.split("\n");
-  var choice = compliments[Math.floor(Math.random() * (compliments.length-1))];
-  var ret = complimentee + ", " + choice;
-  return ret;
-
+  var compliments = text.split('\n");
+  return name + ", " + compliments[Math.floor(Math.random() * (compliments.length - 1))];
 
 }
-
 
 exports.respond = respond;
