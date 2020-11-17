@@ -6,7 +6,7 @@ var botID = "79e68331dba0dddfb1c4da512f"; //test bot
 
 function respond() {
   var request = JSON.parse(this.req.chunks[0]),
-      FMTRegex = /^.*mock trial.*$/i
+      FMTRegex = /^.*mock trial.*$/i,
       complimentRegex = /^munchbot, compliment.*$/i;
 
   if(request.text && FMTRegex.test(request.text)) {
