@@ -18,6 +18,7 @@ function respond() {
     this.res.writeHead(200);
     postCompliment();
     this.res.end();
+  }
     else {
     console.log("don't care");
     this.res.writeHead(200);
@@ -59,7 +60,7 @@ function postMessage() {
   });
   botReq.end(JSON.stringify(body));
 }
-/*
+
 function postCompliment() {
   var botResponse, options, body, botReq;
 
@@ -94,6 +95,6 @@ function postCompliment() {
   });
   botReq.end(JSON.stringify(body));
 }
-*/
+
 
 exports.respond = respond;
