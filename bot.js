@@ -59,7 +59,7 @@ function postMessage() {
   });
   botReq.end(JSON.stringify(body));
 }
-
+/*
 function postCompliment() {
   var botResponse, options, body, botReq;
 
@@ -94,6 +94,6 @@ function postCompliment() {
   });
   botReq.end(JSON.stringify(body));
 }
-
+*/
 
 exports.respond = respond;
