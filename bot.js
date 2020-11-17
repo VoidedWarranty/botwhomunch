@@ -6,17 +6,17 @@ var botID = "79e68331dba0dddfb1c4da512f"; //test bot
 
 function respond() {
   var request = JSON.parse(this.req.chunks[0]),
-      botRegex = /^.*mock trial.*$/i
+      FMTRegex = /^.*mock trial.*$/i
       complimentRegex = /^munchbot, compliment.*$/i;
 
-  if(request.text && botRegex.test(request.text)) {
+  if(request.text && FMTRegex.test(request.text)) {
     this.res.writeHead(200);
-    postMessage();
+    postFMT();
     this.res.end();
   } 
   else if(request.text && complimentRegex.test(request.text)){
     this.res.writeHead(200);
-    postCompliment();
+    postCompliment(request.text.substring(20));
     this.res.end();
   }
     else {
@@ -26,7 +26,7 @@ function respond() {
   }
 }
 
-function postMessage() {
+function postFMT() {
   var botResponse, options, body, botReq;
 
   botResponse = "https://imgur.com/a/Xx4g4x6";
@@ -61,10 +61,10 @@ function postMessage() {
   botReq.end(JSON.stringify(body));
 }
 
-function postCompliment() {
+function postCompliment(name) {
   var botResponse, options, body, botReq;
 
-  botResponse = "this is a test response!";
+  botResponse = getCompliment(name);
 
   options = {
     hostname: 'api.groupme.com',
@@ -96,5 +96,12 @@ function postCompliment() {
   botReq.end(JSON.stringify(body));
 }
 
+function getCompliment(name) {
+  var fs = require("fs");
+  var text = fs.readFileSync("./compliments.txt");
+  var compliments = text.split('\n");
+  return name + ", " + compliments[Math.floor(Math.random() * (compliments.length - 1))];
+
+}
 
 exports.respond = respond;
