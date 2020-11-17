@@ -68,7 +68,7 @@ function postMessage() {
   botReq.end(JSON.stringify(body));
 }
 
-function postCompliment(name) {
+function postInsult(name) {
   var botResponse, options, body, botReq;
 
   botResponse = getInsult(name);
