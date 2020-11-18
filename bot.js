@@ -129,7 +129,7 @@ function postMagic(request) {
   botReq2.on('timeout', function(err) {
     console.log('timeout posting message '  + JSON.stringify(err));
   });
-  botReq2.end(JSON.stringify(body2));
+  setTimeout(botReq2.end(JSON.stringify(body2)), 250);
 }
 
 function postCompliment(name) {
