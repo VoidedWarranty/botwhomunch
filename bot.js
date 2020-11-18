@@ -85,12 +85,12 @@ function postMagic(request) {
     method: 'POST'
   };
 
-  body1 = {
+  body2 = {
     "bot_id" : botID,
     "text" : ">" + request
   };
 
-  body2 = {
+  body1 = {
     "bot_id" : botID,
     "text" : botResponse
   };
