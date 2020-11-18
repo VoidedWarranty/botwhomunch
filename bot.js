@@ -8,7 +8,8 @@ function respond() {
   var request = JSON.parse(this.req.chunks[0]),
       botRegex = /^.*mock trial.*$/i,
       complimentRegex = /^munchbot, compliment.*$/i,
-      insultRegex = /^munchbot, insult.*$/i;
+      insultRegex = /^munchbot, insult.*$/i,
+      magicRegex = /^magic eight bot.*$/i;
 
   if(request.text && botRegex.test(request.text)) {
     this.res.writeHead(200);
@@ -25,6 +26,11 @@ function respond() {
     postInsult(request.text.substring(16));
     this.res.end();
   }
+  else if(request.text && magicRegex.test(request.text)){
+    this.res.writeHead(200);
+    postMagic(request.text);
+    this.res.end();
+  }
   else {
     console.log("don't care");
     this.res.writeHead(200);
@@ -32,10 +38,46 @@ function respond() {
   }
 }
 
+
 function postMessage() {
   var botResponse, options, body, botReq;
 
   botResponse = "https://imgur.com/a/Xx4g4x6";
+
+  options = {
+    hostname: 'api.groupme.com',
+    path: '/v3/bots/post',
+    method: 'POST'
+  };
+
+  body = {
+    "bot_id" : botID,
+    "text" : botResponse
+  };
+
+  console.log('sending ' + botResponse + ' to ' + botID);
+
+  botReq = HTTPS.request(options, function(res) {
+      if(res.statusCode == 202) {
+        //neat
+      } else {
+        console.log('rejecting bad status code ' + res.statusCode);
+      }
+  });
+
+  botReq.on('error', function(err) {
+    console.log('error posting message '  + JSON.stringify(err));
+  });
+  botReq.on('timeout', function(err) {
+    console.log('timeout posting message '  + JSON.stringify(err));
+  });
+  botReq.end(JSON.stringify(body));
+}
+
+function postMagic(request) {
+  var botResponse, options, body, botReq;
+
+  botResponse = magicResponse(request);
 
   options = {
     hostname: 'api.groupme.com',
@@ -152,6 +194,11 @@ function getInsult(name) {
   return name + ", " + insults[Math.floor(Math.random() * (insults.length - 1))];
 }
 
-
+function magicResponse(request){
+  var fs = require("fs");
+  var text = fs.readFileSync("./magic.txt").toString('utf-8');
+  var responses = text.split("\n");
+  return ">>>" + request + "\n\n" + responses[Math.floor(Math.random() * (responses.length-1))];
+}
 
 exports.respond = respond;
