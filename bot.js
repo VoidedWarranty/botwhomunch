@@ -77,7 +77,7 @@ function postMessage() {
 function postMagic(request) {
   var botResponse, options, body1, body2, botReq1, botReq2;
 
-  botResponse = magicResponse();
+  botResponse = ">" + request;
 
   options = {
     hostname: 'api.groupme.com',
@@ -85,12 +85,8 @@ function postMagic(request) {
     method: 'POST'
   };
 
-  body2 = {
-    "bot_id" : botID,
-    "text" : ">" + request
-  };
 
-  body1 = {
+  body = {
     "bot_id" : botID,
     "text" : botResponse
   };
@@ -111,11 +107,31 @@ function postMagic(request) {
   botReq1.on('timeout', function(err) {
     console.log('timeout posting message '  + JSON.stringify(err));
   });
-  botReq1.end(JSON.stringify(body1));
+  botReq1.end(JSON.stringify(body));
 
-  setTimeout(console.log('brief timeout'), 1000);
+  setTimout(postMagic2(), 250);
 
-  botReq2 = HTTPS.request(options, function(res) {
+}
+
+function postMagic2() {
+  var botResponse, options, body, botReq;
+
+  botResponse = magicResponse();
+
+  options = {
+    hostname: 'api.groupme.com',
+    path: '/v3/bots/post',
+    method: 'POST'
+  };
+
+  body = {
+    "bot_id" : botID,
+    "text" : botResponse
+  };
+
+  setTimeout(console.log('sending ' + botResponse + ' to ' + botID), 50);
+
+  botReq = HTTPS.request(options, function(res) {
       if(res.statusCode == 202) {
         //neat
       } else {
@@ -123,14 +139,15 @@ function postMagic(request) {
       }
   });
 
-  botReq2.on('error', function(err) {
+  botReq.on('error', function(err) {
     console.log('error posting message '  + JSON.stringify(err));
   });
-  botReq2.on('timeout', function(err) {
+  botReq.on('timeout', function(err) {
     console.log('timeout posting message '  + JSON.stringify(err));
   });
-  setTimeout(botReq2.end(JSON.stringify(body2)), 250);
+  botReq.end(JSON.stringify(body));
 }
+
 
 function postCompliment(name) {
   var botResponse, options, body, botReq;
