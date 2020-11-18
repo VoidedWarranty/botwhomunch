@@ -109,7 +109,7 @@ function postMagic(request) {
   });
   botReq1.end(JSON.stringify(body));
 
-  setTimeout(postMagic2(), 250);
+  setTimeout(postMagic2(), 1000);
 
 }
 
