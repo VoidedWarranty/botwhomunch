@@ -111,7 +111,7 @@ function postMagic(request) {
   botReq1.on('timeout', function(err) {
     console.log('timeout posting message '  + JSON.stringify(err));
   });
-  botReq1.end(JSON.stringify(body));
+  botReq1.end(JSON.stringify(body1));
 
   botReq2 = HTTPS.request(options, function(res) {
       if(res.statusCode == 202) {
@@ -127,7 +127,7 @@ function postMagic(request) {
   botReq2.on('timeout', function(err) {
     console.log('timeout posting message '  + JSON.stringify(err));
   });
-  botReq2.end(JSON.stringify(body));
+  botReq2.end(JSON.stringify(body2));
 }
 
 function postCompliment(name) {
