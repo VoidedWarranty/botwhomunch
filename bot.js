@@ -55,7 +55,7 @@ function postMessage() {
     "text" : botResponse
   };
 
-  console.log('sending ' + botResponse + ' to ' + botID);
+  setTimeout(console.log('sending ' + botResponse + ' to ' + botID), 50);
 
   botReq = HTTPS.request(options, function(res) {
       if(res.statusCode == 202) {
@@ -113,6 +113,7 @@ function postMagic(request) {
   });
   botReq1.end(JSON.stringify(body1));
 
+  setTimeout(console.log('brief timeout'), 50);
   botReq2 = HTTPS.request(options, function(res) {
       if(res.statusCode == 202) {
         //neat
@@ -146,7 +147,7 @@ function postCompliment(name) {
     "text" : botResponse
   };
 
-  console.log('sending ' + botResponse + ' to ' + botID);
+  setTimeout(console.log('sending ' + botResponse + ' to ' + botID), 50);
 
   botReq = HTTPS.request(options, function(res) {
       if(res.statusCode == 202) {
@@ -181,7 +182,7 @@ function postInsult(name) {
     "text" : botResponse
   };
 
-  console.log('sending ' + botResponse + ' to ' + botID);
+  setTimeout(console.log('sending ' + botResponse + ' to ' + botID), 50);
 
   botReq = HTTPS.request(options, function(res) {
       if(res.statusCode == 202) {
@@ -215,11 +216,11 @@ function getInsult(name) {
   return name + ", " + insults[Math.floor(Math.random() * (insults.length - 1))];
 }
 
-function magicResponse(request){
+function magicResponse(){
   var fs = require("fs");
   var text = fs.readFileSync("./magic.txt").toString('utf-8');
   var responses = text.split("\n");
-  return ">" + request + "\n" + responses[Math.floor(Math.random() * (responses.length-1))];
+  return responses[Math.floor(Math.random() * (responses.length-1))];
 }
 
 exports.respond = respond;
