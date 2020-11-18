@@ -75,9 +75,9 @@ function postMessage() {
 }
 
 function postMagic(request) {
-  var botResponse, options, body, botReq;
+  var botResponse, options, body1, body2, botReq1, botReq2;
 
-  botResponse = magicResponse(request);
+  botResponse = magicResponse();
 
   options = {
     hostname: 'api.groupme.com',
@@ -85,14 +85,19 @@ function postMagic(request) {
     method: 'POST'
   };
 
-  body = {
+  body1 = {
+    "bot_id" : botID,
+    "text" : ">" + request
+  };
+
+  body2 = {
     "bot_id" : botID,
     "text" : botResponse
   };
 
   console.log('sending ' + botResponse + ' to ' + botID);
 
-  botReq = HTTPS.request(options, function(res) {
+  botReq1 = HTTPS.request(options, function(res) {
       if(res.statusCode == 202) {
         //neat
       } else {
@@ -100,13 +105,29 @@ function postMagic(request) {
       }
   });
 
-  botReq.on('error', function(err) {
+  botReq1.on('error', function(err) {
     console.log('error posting message '  + JSON.stringify(err));
   });
-  botReq.on('timeout', function(err) {
+  botReq1.on('timeout', function(err) {
     console.log('timeout posting message '  + JSON.stringify(err));
   });
-  botReq.end(JSON.stringify(body));
+  botReq1.end(JSON.stringify(body));
+
+  botReq2 = HTTPS.request(options, function(res) {
+      if(res.statusCode == 202) {
+        //neat
+      } else {
+        console.log('rejecting bad status code ' + res.statusCode);
+      }
+  });
+
+  botReq2.on('error', function(err) {
+    console.log('error posting message '  + JSON.stringify(err));
+  });
+  botReq2.on('timeout', function(err) {
+    console.log('timeout posting message '  + JSON.stringify(err));
+  });
+  botReq2.end(JSON.stringify(body));
 }
 
 function postCompliment(name) {
@@ -198,7 +219,7 @@ function magicResponse(request){
   var fs = require("fs");
   var text = fs.readFileSync("./magic.txt").toString('utf-8');
   var responses = text.split("\n");
-  return ">>>" + request + "\n\n" + responses[Math.floor(Math.random() * (responses.length-1))];
+  return ">" + request + "\n" + responses[Math.floor(Math.random() * (responses.length-1))];
 }
 
 exports.respond = respond;
