@@ -113,7 +113,8 @@ function postMagic(request) {
   });
   botReq1.end(JSON.stringify(body1));
 
-  setTimeout(console.log('brief timeout'), 50);
+  setTimeout(console.log('brief timeout'), 150);
+
   botReq2 = HTTPS.request(options, function(res) {
       if(res.statusCode == 202) {
         //neat
